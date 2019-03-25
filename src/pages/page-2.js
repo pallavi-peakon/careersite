@@ -1,16 +1,25 @@
 import React from "react"
-import { Link } from "gatsby"
+import { FormattedMessage } from "react-intl"
+
+import { withIntl, Link } from "../i18n"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const SecondPage = () => (
+const SecondPage = ({ intl }) => (
   <Layout>
-    <SEO title="Page two" />
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
+    <SEO title={intl.formatMessage({ id: "title_page2" })} />
+    <h1>
+      <FormattedMessage id="title_page2" />
+    </h1>
+    <p>
+      <FormattedMessage id="welcome2" />
+    </p>
+    <Link to="/">
+      <FormattedMessage id="goback" />
+    </Link>
   </Layout>
 )
 
-export default SecondPage
+export default withIntl(SecondPage)
+

@@ -4,28 +4,21 @@
  *
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
+/**
+ * SEO component that queries for data with
+ *  Gatsby's useStaticQuery React hook
+ *
+ * See: https://www.gatsbyjs.org/docs/use-static-query/
+ */
 
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
+import { injectIntl } from "react-intl"
 
-function SEO({ description, lang, meta, keywords, title }) {
-  const { site } = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            author
-          }
-        }
-      }
-    `
-  )
-
-  const metaDescription = description || site.siteMetadata.description
+function SEO({ description, lang, meta, keywords, title, intl }) {
+  const metaDescription =
+    description || intl.formatMessage({ id: "description" })
 
   return (
     <Helmet
@@ -33,7 +26,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s | ${intl.formatMessage({ id: "title" })}`}
       meta={[
         {
           name: `description`,
@@ -57,7 +50,7 @@ function SEO({ description, lang, meta, keywords, title }) {
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata.author,
+          content: intl.formatMessage({ id: "author" }),
         },
         {
           name: `twitter:title`,
@@ -95,4 +88,4 @@ SEO.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
-export default SEO
+export default injectIntl(SEO)
